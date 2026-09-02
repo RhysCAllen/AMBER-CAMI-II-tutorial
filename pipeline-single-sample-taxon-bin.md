@@ -1,6 +1,7 @@
 September 2nd, 2026
 
-The following attempts to describe step by step how to use AMBER to analyze taxon bins from user-created assemblies of CAMI II challenge samples..
+The following attempts to describe step by step how to use AMBER to analyze taxon bins from user-created assemblies of CAMI II challenge samples.
+We're using information from https://github.com/CAMI-challenge/AMBER/tree/master and from the CAMI web portal pages. 
 
 This example uses Sample 0 from the CAMI II plant rhizosphere challenge. The reads were assembled with metaspades, and binned with MetaBat2.
 
@@ -43,4 +44,7 @@ S0R0/2	Otu14.0	1144338	150
 S0R1/1	LjRoot62	34073	150
 ```
 
-3) 
+3) Use convert_fasta_bins_to_biobox_format.py to format your bins:
+
+ usage: convert_fasta_bins_to_biobox_format.py [-h] [-o OUTPUT_FILE] paths [paths ...]
+
