@@ -6,9 +6,10 @@ This example uses Sample 0 from the CAMI II plant rhizosphere challenge. The rea
 
 This procedure assumes you have the following files:
 
-A) binned contigs (MetaBat2 output), B) A mapping file of CAMI II reads to the contigs. The reads use CAMI II challenge sequence identifiers. For this challenge, the read identifiers look like this: S0/1 S0/2 .... S09255736547/1 S03903583058/2
-
+A) binned contigs (MetaBat2 output)   
+B) A mapping file of CAMI II reads to the contigs. 
 C) Classification of the bins in the form of NCBI taxids specific to the Jan 2019 RefSeq snapshot provided with the CAMI II challenge.
+D) The names.dmp and nodes.dmp files from the tax-to-accessions download from the CAMI 2019 snapshot. 
 
 Procedure:
 
