@@ -1,28 +1,12 @@
 September 2nd, 2026
 
-The following attempts to describe step by step how to use AMBER to analyze taxon bins from user-created assemblies of CAMI II challenge samples..
+Rough draft of guide to analyze taxon bins from CAMI II plant rhizosphere challenge. 
+It seems like the official tutorial is a work in progress:
 
-This example uses Sample 0 from the CAMI II plant rhizosphere challenge. The reads were assembled with metaspades, and binned with MetaBat2.
+https://github.com/CAMI-challenge/AMBER/blob/master/tutorial.txt
 
-This procedure assumes you have the following files:
+The motivations for this repo are:
+a) Try to document for myself these steps, hopefully figuring out as I go, to fill in my gaps in understanding after reviewing the official documentation for submitting taxon bins.
+b) Share this documentwith CAMI team, hopefully receiving any corrections needed.
+c) Share publicly as a CAMI II challenge repo issue, to hopefully be useful supplement to official AMBER documentation for the CAMI challenges. 
 
-A) binned contigs (MetaBat2 output), 
-B) A mapping file of CAMI II reads to the contigs. The reads use CAMI II challenge sequence identifiers. For this challenge, the read identifiers look like this:
-S0/1
-S0/2
-....
-S09255736547/1
-S03903583058/2
-
-C) Classification of the bins in the form of NCBI taxids specific to the Jan 2019 RefSeq snapshot provided with the CAMI II challenge. 
-
-
-Procedure:
-1) Download the gsa_mapping.binning file, which will be the gold-standard binning input file for amber.py.. 
-https://cami-challenge.org/submit/ → https://zenodo.org/records/4982288 → https://zenodo.org/records/4982288/files/taxonomic_binning_cami2.tar.gz?download=1
-curl -JLO https://zenodo.org/records/4982288/files/taxonomic_binning_cami2.tar.gz?download=1
-tar -xvf taxonomic_binning_cami2.tar.gz
-rm taxonomic_binning_cami2.tar.gz
-
-You will see three folders in the untarred download:
-retain the plant-rhizosphere directory.
