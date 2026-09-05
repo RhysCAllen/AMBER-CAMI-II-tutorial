@@ -16,7 +16,7 @@ This pipeline will obtain or create the following additional files:
 D) CAMI reference gold standard bin mapping file (downloaded).
 E) Your own bin mapping file, created using AMBER repo scripts and also bbtools. 
 
-##### Procedure:  
+## Procedure:  
 
 ###### Step 1: Obtain the gsa bin mapping file. 
    Download the gsa_mapping.binning file, which will be the gold-standard binning input file for amber.py:  
