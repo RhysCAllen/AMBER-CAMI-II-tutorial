@@ -5,16 +5,21 @@ We're using information from https://github.com/CAMI-challenge/AMBER/tree/master
 
 This example uses Sample 0 from the CAMI II plant rhizosphere challenge. The reads were assembled with metaspades, and binned with MetaBat2.
 
-This procedure assumes you have the following files:
+This procedure assumes you are starting with the following files:
 
-A) binned contigs (MetaBat2 output)   
-B) A mapping file of CAMI II reads to the contigs. 
-C) Classification of the bins in the form of NCBI taxids specific to the Jan 2019 RefSeq snapshot provided with the CAMI II challenge.
-D) The names.dmp and nodes.dmp files from the tax-to-accessions download from the CAMI 2019 snapshot. 
+A) binned contigs (e.g.MetaBat2 output)   
+B) The names.dmp and nodes.dmp files from the tax-to-accessions download from the CAMI 2019 snapshot:  
+https://cami-challenge.org/reference-databases/ --> https://openstack.cebitec.uni-bielefeld.de:8080/swift/v1/CAMI_2_DATABASES/ncbi_taxonomy_accession2taxid.tar
+C) Classification of your bins in the form of NCBI taxids, specific to the Jan 2019 RefSeq snapshot provided with the CAMI II challenge.
 
-Procedure:
+This pipeline will obtain or create the following additional files:
+D) CAMI reference gold standard bin mapping file (downloaded).
+E) Your own bin mapping file, created using AMBER repo scripts and also bbtools. 
 
-1) Download the gsa_mapping.binning file, which will be the gold-standard binning input file for amber.py:  
+##### Procedure:  
+
+###### Step 1: Obtain the gsa bin mapping file. 
+   Download the gsa_mapping.binning file, which will be the gold-standard binning input file for amber.py:  
    https://cami-challenge.org/submit/ →
    https://zenodo.org/records/4982288 →
    https://zenodo.org/records/4982288/files/taxonomic_binning_cami2.tar.gz?download=1  
@@ -27,7 +32,7 @@ You will see three folders in the untarred download: retain the plant-rhizospher
     strain_associated_dataset
     marine_associated_dataset
 
-2) Locate the gsa_mapping.binning file in the plant_associated_dataset directory:
+Locate the gsa_mapping.binning file in the plant_associated_dataset directory:
 
 `cd plant_associated_dataset/ground_truth`
 `tar -xvf rhizosphere_short_read_samples.binning.tar.gz`
@@ -43,6 +48,9 @@ S0R0/1	Otu14.0	1144338	150
 S0R0/2	Otu14.0	1144338	150
 S0R1/1	LjRoot62	34073	150
 ```
+
+###### Step 2: Convert your MetaBat bins to biobox format using AMBER script.
+
 
 3) Use convert_fasta_bins_to_biobox_format.py to format your bins:
 
