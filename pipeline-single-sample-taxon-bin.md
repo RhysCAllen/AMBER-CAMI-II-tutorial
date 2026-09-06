@@ -85,9 +85,34 @@ c_000000013680	sample_0__METABAT2__P.1__bin.7.fa
 ```
 
 Make sure to edit the name of your sampleID from `_SAMPLEID_` to `rhimgCAMI2_short_read_sample_0`. Sample names can be found from https://cami-challenge.org/taxonomic_binning/   
- 
-###### Step 3: Add taxid column somehow :D
 
+###### Step 3: Create a read-to-contig mapping file from your bin sam file
+
+The .sam file that was used to determine differential abundance for binning your assemblies is the input file here. 
+`awk -v FS='\t' -v OFS='\t' '!/^@/ {print $1, $3}' sample_0.sam >> reads-to-contig.mapping.tsv`
+
+Your output will contain the SEQUENCEID column necessary AMBER to compare your results to the gold standard, and which contigs these correspond to.
+The BH tags are added by BayesHammer, they will be removed in the next step. 
+
+```
+head reads-to-contig.mapping.tsv 
+S0R16554400/1 BH:failed	c_000000131573
+S0R16554448/2 BH:changed:10	c_000000004317
+S0R16554483/2 BH:changed:5	c_000000057414
+S0R16555152/2 BH:failed	c_000000223269
+S0R16555191/1 BH:failed	c_000000267876
+...
+```
+
+###### Step 4: Combine previous results with your taxonomy using a custom script, such as xxx
+
+The format of your taxonomy file may vary. Shown here is the kraken-style report from a sourmash tax metagenome output. 
+Feel free to modify the script to fit your input file formats. 
+
+Input files:
+reads-to-contig.mapping.tsv
+sample_0_METABAT2.biobox.profile
+taxonomy.report such as bin.11.kreport.txt
 
 
 
