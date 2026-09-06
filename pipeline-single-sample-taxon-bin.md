@@ -1,21 +1,21 @@
 September 2nd, 2026
 
 The following attempts to describe step by step how to use AMBER to analyze taxon bins from user-created assemblies of CAMI II challenge samples.
-We're using information from https://github.com/CAMI-challenge/AMBER/tree/master and from the CAMI web portal pages. 
+References used include https://github.com/CAMI-challenge/AMBER/tree/master and https://cami-challenge.org/file-formats/   
 
 This pipeline uses Sample 0 from the CAMI II plant rhizosphere challenge. The reads were assembled with metaspades, and binned with MetaBat2.
 
 This pipeline assumes the following:
    AMBER is installed locally  
    you have the following:  
-      A) binned contigs (e.g.your MetaBat2 output)   
+      A) binned contigs (e.g.your MetaBat2 or other binner output)   
       B) The names.dmp and nodes.dmp files from the tax-to-accessions download from the CAMI 2019 snapshot:  
       https://cami-challenge.org/reference-databases/ --> https://openstack.cebitec.uni-bielefeld.de:8080/swift/v1/CAMI_2_DATABASES/ncbi_taxonomy_accession2taxid.tar   
       C) Classification of your bins in the form of NCBI taxids, specific to the Jan 2019 RefSeq snapshot provided with the CAMI II challenge.  
 
 This pipeline will obtain or create the following additional files:  
 D) CAMI reference gold standard bin mapping file (downloaded).  
-E) Your own bin mapping file, created using AMBER repo scripts and also bbtools.   
+E) Your own bin mapping file, created using AMBER repo scripts and also a python script.   
 
 ## Procedure:   
 
@@ -86,21 +86,27 @@ c_000000013680	sample_0__METABAT2__P.1__bin.7.fa
 
 Make sure to edit the name of your sampleID from `_SAMPLEID_` to `rhimgCAMI2_short_read_sample_0`. Sample names can be found from https://cami-challenge.org/taxonomic_binning/   
 
-###### Step 3: Create a read-to-contig mapping file from your bin sam file
+###### Step 3: Create a reads-to-contigs mapping file from your bin sam file
 
-The .sam file that was used to determine differential abundance for binning your assemblies is the input file here. 
-`awk -v FS='\t' -v OFS='\t' '!/^@/ {print $1, $3}' sample_0.sam >> reads-to-contig.mapping.tsv`
+The .sam file that was used to determine differential abundance for binning your assemblies is the input file here.  
+Using the SAM format specifications to choose the column headers for our mapping file: https://samtools.github.io/hts-specs/SAMv1.pdf  
+
+`echo "QNAME   RNAME" > reads-to-contigs-mapping.tsv`  
+
+Append the read names and corresponding contig names:  
+
+`awk -v FS='\t' -v OFS='\t' '!/^@/ {print $1, $3}' sample_0.sam >> reads-to-contigs-mapping.tsv`
 
 Your output will contain the SEQUENCEID column necessary AMBER to compare your results to the gold standard, and which contigs these correspond to.
-The BH tags are added by BayesHammer, they will be removed in the next step. 
+The BH tags were added during read processing by BayesHammer; they will be removed in the next step. 
 
 ```
-head reads-to-contig.mapping.tsv 
+head reads-to-contigs-mapping.tsv 
+QNAME	RNAME
 S0R16554400/1 BH:failed	c_000000131573
 S0R16554448/2 BH:changed:10	c_000000004317
 S0R16554483/2 BH:changed:5	c_000000057414
 S0R16555152/2 BH:failed	c_000000223269
-S0R16555191/1 BH:failed	c_000000267876
 ...
 ```
 
